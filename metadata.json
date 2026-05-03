@@ -1,0 +1,6 @@
+{
+  "name": "ZenFocus",
+  "description": "A minimalist focus dashboard featuring a high-contrast clock, daily intentions, and task tracking to help users stay mindful throughout their workday.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
