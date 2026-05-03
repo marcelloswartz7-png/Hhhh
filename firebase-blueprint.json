@@ -1,0 +1,77 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User profile data including statistics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "isPremium": { "type": "boolean" },
+        "isAdmin": { "type": "boolean" },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "totalQuizzes": { "type": "integer" },
+            "averageScore": { "type": "number" },
+            "progress": {
+              "type": "object",
+              "properties": {
+                "road-signs": { "type": "number" },
+                "rules": { "type": "number" },
+                "general": { "type": "number" }
+              }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "displayName", "stats", "createdAt", "updatedAt"]
+    },
+    "QuizResult": {
+      "title": "Quiz Result",
+      "description": "Records of individual quiz completions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "category": { "type": "string", "enum": ["road-signs", "rules", "general"] },
+        "score": { "type": "integer" },
+        "totalQuestions": { "type": "integer" },
+        "completedAt": { "type": "integer", "format": "timestamp" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "category", "score", "totalQuestions", "completedAt", "createdAt"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "Quiz questions for learners license",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "correctAnswer": { "type": "integer" },
+        "category": { "type": "string", "enum": ["road-signs", "rules", "general"] },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["id", "text", "options", "correctAnswer", "category"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Individual user profiles"
+    },
+    "/results/{resultId}": {
+      "schema": "QuizResult",
+      "description": "Historical quiz results"
+    },
+    "/questions/{questionId}": {
+      "schema": "Question",
+      "description": "Pool of quiz questions"
+    }
+  }
+}
